@@ -1,0 +1,83 @@
+<!-- Plantilla de Voucher de Pago - ITEEC -->
+<!-- Esta plantilla es referencia. El HTML real se genera dinámicamente en pdfGenerator.js -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Voucher de Pago ITEEC</title>
+  <style>
+    /* Estilos del voucher */
+  </style>
+</head>
+<body>
+  <div class="voucher">
+    <div class="header">
+      <h1>INSTITUTO TÉCNICO DE EDUCACIÓN ESPECIALIZADO DE EL SALVADOR</h1>
+      <h2>VOUCHER DE PAGO</h2>
+    </div>
+    
+    <div class="info-section">
+      <div class="info-box">
+        <div class="info-label">Nombre del Docente</div>
+        <div class="info-value">{{nombre}}</div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Cargo</div>
+        <div class="info-value">{{cargo}}</div>
+      </div>
+    </div>
+    
+    <div class="two-columns">
+      <div class="column">
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2">INGRESOS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each ingresos}}
+            <tr>
+              <td>{{concepto}}</td>
+              <td class="text-right">{{monto}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="column">
+        <table>
+          <thead>
+            <tr>
+              <th colspan="2">DEDUCCIONES</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each deducciones}}
+            <tr>
+              <td>{{concepto}}</td>
+              <td class="text-right">{{monto}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="neto-box">
+      <div class="neto-label">TOTAL NETO A RECIBIR</div>
+      <div class="neto-value">{{neto}}</div>
+    </div>
+    
+    <div class="signature-section">
+      <div class="signature-box">
+        <div class="signature-line">Firma del Empleado<br>Recibido conforme</div>
+      </div>
+      <div class="signature-box">
+        <div class="signature-line">Vo. Bo. Recursos Humanos</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

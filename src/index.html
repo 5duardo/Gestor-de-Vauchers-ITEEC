@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITEEC - Generador de Vouchers de Pago</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <img src="../assets/logo-pantera.png" alt="ITEEC Logo" class="header-logo-img">
+      <div class="header-text">
+        <h1>Generador de Vouchers de Pago</h1>
+        <p class="subtitle">Instituto Técnico en Electricidad, Electrónica y Computación</p>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- Paso 1: Seleccionar archivo -->
+      <section class="step" id="step1">
+        <h2>1. Seleccionar Archivo de Planilla</h2>
+        <div class="file-selector">
+          <button id="btnSelectFile" class="btn btn-primary">
+            Seleccionar archivo Excel
+          </button>
+          <span id="fileName" class="file-name">Ningún archivo seleccionado</span>
+        </div>
+      </section>
+
+      <!-- Paso 1.5: Seleccionar mes/hoja -->
+      <section class="step hidden" id="stepMes">
+        <h2>2. Seleccionar Mes</h2>
+        <div class="form-group mes-selector-group">
+          <label for="mesSelect">Mes a procesar:</label>
+          <div class="select-wrapper">
+            <select id="mesSelect" class="mes-select">
+              <option value="">— Seleccione un mes —</option>
+            </select>
+          </div>
+          <button id="btnCargarMes" class="btn btn-primary" disabled>
+            Cargar datos del mes
+          </button>
+        </div>
+      </section>
+
+      <!-- Paso 3: Vista previa de datos -->
+      <section class="step hidden" id="step3">
+        <h2>3. Vista Previa de Datos</h2>
+        <div class="stats" id="stats"></div>
+        <div class="view-controls">
+          <label class="toggle-label">
+            <input type="checkbox" id="viewToggle" class="toggle-checkbox">
+            <span class="toggle-slider"></span>
+            Ver resultados por maestro (Estilo Caja)
+          </label>
+        </div>
+        <div class="table-container" id="tableContainer">
+          <table id="previewTable">
+            <thead id="previewHead"></thead>
+            <tbody id="previewBody"></tbody>
+          </table>
+        </div>
+        <div id="cardsContainer" class="cards-container hidden"></div>
+      </section>
+
+      <!-- Paso 4: Generar PDF -->
+      <section class="step hidden" id="step4">
+        <h2>5. Generar Vouchers</h2>
+        <div class="actions">
+          <button id="btnGenerate" class="btn btn-success">
+            Generar PDF Consolidado
+          </button>
+          <button id="btnReset" class="btn btn-secondary">
+            Comenzar de Nuevo
+          </button>
+        </div>
+      </section>
+
+      <!-- Estado y mensajes -->
+      <section class="status-section">
+        <div id="status" class="status hidden"></div>
+        <div id="progress" class="progress hidden">
+          <div class="progress-bar"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 ITEEC — Instituto Técnico en Electricidad, Electrónica y Computación</p>
+    </footer>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

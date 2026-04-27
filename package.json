@@ -1,0 +1,36 @@
+{
+  "name": "gestor-de-vauchers-iteec",
+  "version": "1.0.0",
+  "description": "Generador de vouchers de pago para docentes ITEEC",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "appId": "com.iteec.vouchers",
+    "productName": "Gestor de Vauchers ITEEC",
+    "win": {
+      "target": "portable",
+      "icon": "assets/logo-pantera.png"
+    },
+    "portable": {
+      "artifactName": "Generador-Vouchers-ITEEC.exe"
+    },
+    "directories": {
+      "output": "dist"
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^41.3.0",
+    "electron-builder": "^24.13.3",
+    "handlebars": "^4.7.9",
+    "puppeteer": "^24.42.0",
+    "xlsx": "^0.18.5"
+  }
+}
