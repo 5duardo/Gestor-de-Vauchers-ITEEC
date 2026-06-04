@@ -1,9 +1,85 @@
 const { app, BrowserWindow, ipcMain, dialog, Menu, shell } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const path = require('path');
 const ExcelParser = require('./lib/excelParser');
 const PdfGenerator = require('./lib/pdfGenerator');
 
 let mainWindow;
+let updateCheckInProgress = false;
+
+function setupAutoUpdater() {
+  if (!app.isPackaged) {
+    return;
+  }
+
+  autoUpdater.autoDownload = false;
+
+  autoUpdater.on('update-available', async (info) => {
+    if (!mainWindow) {
+      return;
+    }
+
+    const result = await dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      title: 'Actualizacion disponible',
+      message: `Hay una nueva version (${info.version}).`,
+      detail: 'Quieres descargarla ahora?',
+      buttons: ['Descargar', 'Mas tarde'],
+      defaultId: 0,
+      cancelId: 1
+    });
+
+    if (result.response === 0) {
+      autoUpdater.downloadUpdate();
+    }
+  });
+
+  autoUpdater.on('download-progress', (progress) => {
+    if (mainWindow && progress && typeof progress.percent === 'number') {
+      mainWindow.setProgressBar(progress.percent / 100);
+    }
+  });
+
+  autoUpdater.on('update-downloaded', async () => {
+    if (mainWindow) {
+      mainWindow.setProgressBar(-1);
+    }
+
+    const result = await dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      title: 'Actualizacion lista',
+      message: 'La actualizacion se descargo correctamente.',
+      detail: 'Quieres instalarla y reiniciar ahora?',
+      buttons: ['Instalar y reiniciar', 'Mas tarde'],
+      defaultId: 0,
+      cancelId: 1
+    });
+
+    if (result.response === 0) {
+      autoUpdater.quitAndInstall();
+    }
+  });
+
+  autoUpdater.on('error', (error) => {
+    console.error('[Updater] Error:', error && error.message ? error.message : error);
+  });
+}
+
+function checkForUpdates() {
+  if (!app.isPackaged || updateCheckInProgress) {
+    return;
+  }
+
+  updateCheckInProgress = true;
+
+  autoUpdater.checkForUpdates()
+    .catch((error) => {
+      console.error('[Updater] Error:', error && error.message ? error.message : error);
+    })
+    .finally(() => {
+      updateCheckInProgress = false;
+    });
+}
 
 function createWindow() {
   // Quitar menú de ventana
@@ -30,6 +106,8 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+  setupAutoUpdater();
+  checkForUpdates();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {

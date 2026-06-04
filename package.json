@@ -12,11 +12,24 @@
     "appId": "com.iteec.vouchers",
     "productName": "Gestor de Vauchers ITEEC",
     "win": {
-      "target": "portable",
+      "target": [
+        "nsis",
+        "portable"
+      ],
       "icon": "assets/logo-pantera.png"
+    },
+    "nsis": {
+      "artifactName": "Generador-Vouchers-ITEEC-Setup.exe",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
     },
     "portable": {
       "artifactName": "Generador-Vouchers-ITEEC.exe"
+    },
+    "publish": {
+      "provider": "github",
+      "owner": "5duardo",
+      "repo": "Gestor-de-Vauchers-ITEEC"
     },
     "directories": {
       "output": "dist"
@@ -26,6 +39,9 @@
   "author": "",
   "license": "ISC",
   "type": "commonjs",
+  "dependencies": {
+    "electron-updater": "^6.3.0"
+  },
   "devDependencies": {
     "electron": "^41.3.0",
     "electron-builder": "^24.13.3",

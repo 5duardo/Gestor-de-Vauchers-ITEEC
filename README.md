@@ -16,6 +16,11 @@ Aplicacion de escritorio para generar vouchers de pago para docentes a partir de
 
 Si tienes problemas para abrirlo, confirma que Windows permita la ejecucion de aplicaciones descargadas.
 
+## Actualizaciones (usuarios)
+
+- Si instalaste la aplicacion con el instalador, se buscara una nueva version al abrirse y podras descargarla con un clic.
+- Si usas version portable, debes descargar manualmente la nueva version desde Releases.
+
 ## Uso rapido
 
 1. **Seleccionar archivo**: Haz clic en "Seleccionar archivo Excel" y elige la planilla.
@@ -71,6 +76,12 @@ npm install
 ```bash
 npm start
 ```
+
+### Publicar releases (auto-update)
+
+1. Ejecuta el build de Windows.
+2. Sube al Release los archivos del instalador y los metadatos de actualizacion que genera el build.
+3. Publica el Release como version estable (no draft).
 
 ## Estructura del proyecto
 
