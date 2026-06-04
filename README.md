@@ -1,34 +1,31 @@
 # Generador de Vouchers de Pago ITEEC
 
-Aplicación de escritorio para generar vouchers de pago para docentes a partir de archivos Excel de planilla.
+Aplicacion de escritorio para generar vouchers de pago para docentes a partir de planillas Excel. Pensada para uso interno del instituto y para facilitar la emision rapida de vouchers en PDF.
 
-## Requisitos
+## Caracteristicas principales
 
-- Node.js 18 o superior
-- npm (viene con Node.js)
+- Carga planillas Excel y detecta columnas de forma automatica
+- Vista previa antes de generar el PDF
+- PDF consolidado con detalle de ingresos y deducciones
+- Lineas de firma y numeracion de paginas
 
-## Instalación
+## Descarga (usuarios)
 
-```bash
-npm install
-```
+1. Ve a la seccion de Releases del repositorio y descarga el ejecutable mas reciente.
+2. Ejecuta el archivo y abre la aplicacion.
 
-## Uso
+Si tienes problemas para abrirlo, confirma que Windows permita la ejecucion de aplicaciones descargadas.
 
-```bash
-npm start
-```
+## Uso rapido
 
-## Funcionamiento
-
-1. **Seleccionar Archivo**: Haz clic en "Seleccionar archivo Excel" y elige el archivo de planilla
-2. **Configurar Período**: Opcionalmente ingresa el período de pago (ej: "Enero 2026")
-3. **Vista Previa**: Revisa los docentes y montos cargados desde el Excel
-4. **Generar PDF**: Haz clic en "Generar PDF Consolidado" y guarda el archivo
+1. **Seleccionar archivo**: Haz clic en "Seleccionar archivo Excel" y elige la planilla.
+2. **Configurar periodo**: Opcionalmente ingresa el periodo de pago (ej: "Enero 2026").
+3. **Vista previa**: Revisa docentes y montos cargados desde el Excel.
+4. **Generar PDF**: Haz clic en "Generar PDF Consolidado" y guarda el archivo.
 
 ## Formato del Excel esperado
 
-El archivo debe contener las siguientes columnas (el programa detecta automáticamente):
+El archivo debe contener las siguientes columnas (el programa detecta automaticamente):
 
 | Columna | Nombres alternativos aceptados |
 |---------|-------------------------------|
@@ -41,11 +38,11 @@ El archivo debe contener las siguientes columnas (el programa detecta automátic
 | Otras Deducciones | otras, descuentos, prestamo, anticipo |
 | Neto | neto, liquido, salario neto, a recibir |
 
-El programa también detecta automáticamente columnas de:
-- **Ingresos adicionales**: bono, hora extra, incentivo, comisión, aguinaldo
-- **Deducciones adicionales**: descuento, retención, multa, cuota
+El programa tambien detecta automaticamente columnas de:
+- **Ingresos adicionales**: bono, hora extra, incentivo, comision, aguinaldo
+- **Deducciones adicionales**: descuento, retencion, multa, cuota
 
-## Características del Voucher
+## Caracteristicas del voucher
 
 Cada voucher incluye:
 - Encabezado con nombre del instituto (ITEEC)
@@ -53,10 +50,29 @@ Cada voucher incluye:
 - Tabla de ingresos detallados
 - Tabla de deducciones (ISSS, AFP, Renta, etc.)
 - Total neto a recibir destacado
-- Líneas de firma para el empleado y RRHH
-- Numeración de páginas
+- Lineas de firma para el empleado y RRHH
+- Numeracion de paginas
 
-## Estructura del Proyecto
+## Para desarrollo
+
+### Requisitos
+
+- Node.js 18 o superior
+- npm (viene con Node.js)
+
+### Instalacion
+
+```bash
+npm install
+```
+
+### Ejecucion
+
+```bash
+npm start
+```
+
+## Estructura del proyecto
 
 ```
 ├── main.js              # Proceso principal de Electron
@@ -64,16 +80,20 @@ Cada voucher incluye:
 ├── package.json         # Dependencias
 ├── lib/
 │   ├── excelParser.js   # Parseo de archivos Excel
-│   └── pdfGenerator.js  # Generación de PDFs
+│   └── pdfGenerator.js  # Generacion de PDFs
 ├── src/
 │   ├── index.html       # Interfaz de usuario
 │   ├── styles.css       # Estilos
-│   ├── renderer.js      # Lógica frontend
+│   ├── renderer.js      # Logica frontend
 │   └── template/
 │       └── voucher.html # Plantilla de voucher
 └── dist/                # PDFs generados (output)
 ```
 
+## Soporte
+
+Si encuentras errores o quieres sugerir mejoras, abre un issue en el repositorio.
+
 ## Licencia
 
-© 2026 ITEEC - Instituto Técnico de Educación Especializado de El Salvador
+© 2026 ITEEC - Instituto Tecnico de Educacion Especializado de El Salvador
