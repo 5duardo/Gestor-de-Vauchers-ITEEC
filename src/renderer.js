@@ -6,6 +6,7 @@ let availableSheets = [];
 // Referencias a elementos DOM
 const elements = {
   btnSelectFile: document.getElementById('btnSelectFile'),
+  btnDownloadTemplate: document.getElementById('btnDownloadTemplate'),
   fileName: document.getElementById('fileName'),
   stepMes: document.getElementById('stepMes'),
   mesSelect: document.getElementById('mesSelect'),
@@ -148,6 +149,33 @@ elements.btnSelectFile.addEventListener('click', async () => {
 
     showStatus(`Archivo cargado. Se encontraron ${availableSheets.length} hoja(s). Seleccione el mes a procesar.`, 'success');
 
+  } catch (error) {
+    showProgress(false);
+    showStatus(`Error inesperado: ${error.message}`, 'error');
+  }
+});
+
+// ─── Descargar plantilla Excel ─────────────────────────────────────────────
+elements.btnDownloadTemplate.addEventListener('click', async () => {
+  try {
+    showProgress(true);
+    showStatus('Preparando plantilla...', 'info');
+
+    const result = await window.electronAPI.downloadTemplate();
+
+    showProgress(false);
+
+    if (!result || result.canceled) {
+      showStatus('Descarga cancelada', 'info');
+      return;
+    }
+
+    if (!result.success) {
+      showStatus(`Error al guardar plantilla: ${result.error}`, 'error');
+      return;
+    }
+
+    showStatus(`Plantilla guardada en: ${result.filePath}`, 'success', result.filePath);
   } catch (error) {
     showProgress(false);
     showStatus(`Error inesperado: ${error.message}`, 'error');

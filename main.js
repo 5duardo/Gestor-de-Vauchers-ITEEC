@@ -1,11 +1,31 @@
 const { app, BrowserWindow, ipcMain, dialog, Menu, shell } = require('electron');
 const { autoUpdater } = require('electron-updater');
 const path = require('path');
+const fs = require('fs');
 const ExcelParser = require('./lib/excelParser');
 const PdfGenerator = require('./lib/pdfGenerator');
 
 let mainWindow;
 let updateCheckInProgress = false;
+
+function resolveTemplatePath() {
+  const candidates = [
+    path.join(app.getAppPath(), 'assets', 'PLANILLA_2026.xlsx'),
+    path.join(__dirname, 'assets', 'PLANILLA_2026.xlsx')
+  ];
+
+  if (process.resourcesPath) {
+    candidates.push(path.join(process.resourcesPath, 'assets', 'PLANILLA_2026.xlsx'));
+  }
+
+  for (const candidate of candidates) {
+    if (candidate && fs.existsSync(candidate)) {
+      return candidate;
+    }
+  }
+
+  return candidates[0];
+}
 
 function setupAutoUpdater() {
   if (!app.isPackaged) {
@@ -186,6 +206,34 @@ ipcMain.handle('generate-pdf', async (event, { docentes, outputPath, periodo }) 
 
     await generator.generate(docentes, outputPath, periodo);
     return { success: true, filePath: outputPath };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+});
+
+ipcMain.handle('download-template', async () => {
+  try {
+    const templatePath = resolveTemplatePath();
+
+    if (!fs.existsSync(templatePath)) {
+      return { success: false, error: 'No se encontro la plantilla en la aplicacion.' };
+    }
+
+    const result = await dialog.showSaveDialog(mainWindow, {
+      defaultPath: path.join(app.getPath('documents'), 'PLANILLA_2026.xlsx'),
+      filters: [
+        { name: 'Excel Files', extensions: ['xlsx'] }
+      ]
+    });
+
+    if (result.canceled || !result.filePath) {
+      return { success: false, canceled: true };
+    }
+
+    const buffer = await fs.promises.readFile(templatePath);
+    await fs.promises.writeFile(result.filePath, buffer);
+
+    return { success: true, filePath: result.filePath };
   } catch (error) {
     return { success: false, error: error.message };
   }

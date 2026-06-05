@@ -1,6 +1,6 @@
 {
   "name": "gestor-de-vauchers-iteec",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Generador de vouchers de pago para docentes ITEEC",
   "main": "main.js",
   "scripts": {

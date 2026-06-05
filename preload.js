@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   parseExcel: ({ filePath, sheetName }) => ipcRenderer.invoke('parse-excel', { filePath, sheetName }),
   generatePdf: (options) => ipcRenderer.invoke('generate-pdf', options),
   getOutputPath: () => ipcRenderer.invoke('get-output-path'),
-  openFile: (filePath) => ipcRenderer.invoke('open-file', filePath)
+  openFile: (filePath) => ipcRenderer.invoke('open-file', filePath),
+  downloadTemplate: () => ipcRenderer.invoke('download-template')
 });
